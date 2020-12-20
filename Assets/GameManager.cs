@@ -9,14 +9,18 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        StartCoroutine(LateStart(0.5f));
+    }
+
+    IEnumerator LateStart(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
         var allCharacters = FindObjectsOfType<ButtonMashingEvent>();
 
         foreach (var myCharacter in allCharacters)
         {
-            var player = myCharacter.GetComponent<ButtonMashingEvent>();
-
             if (myCharacter.tag == "Player")
-                cats.Add(player);
+                cats.Add(myCharacter.GetComponent<ButtonMashingEvent>());
         }
-    }
+    }    
 }
