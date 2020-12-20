@@ -6,6 +6,13 @@ namespace Mirror.Examples.NetworkRoom
     [AddComponentMenu("")]
     public class NetworkRoomManagerExt : NetworkRoomManager
     {
+        public override void Awake()
+        {
+            //CA::2020-12-20:: Tiro un random list para los minijuegos.
+            randomizeMinigames();
+            base.Awake();
+        }
+
         /*
         [Header("Spawner Setup")]
         [Tooltip("Reward Prefab for the Spawner")]
@@ -91,7 +98,8 @@ namespace Mirror.Examples.NetworkRoom
                 // set to false to hide it in the game scene
                 showStartButton = false;
 
-                ServerChangeScene(GameplayScene[0]);
+                //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
+                ServerChangeScene(GameplayScene[randomListIndex[currentRandomIndex]]);
             }
         }
     }

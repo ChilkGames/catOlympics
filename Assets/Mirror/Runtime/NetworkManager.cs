@@ -5,6 +5,7 @@ using kcp2k;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using Random=UnityEngine.Random;
 
 namespace Mirror
 {
@@ -134,6 +135,8 @@ namespace Mirror
         [FormerlySerializedAs("m_PlayerPrefab")]
         [Tooltip("Prefab of the player object. Prefab must have a Network Identity component. May be an empty game object or a full avatar.")]
         public List<GameObject> playerPrefab;
+        public List<int> randomListIndex;
+        public int currentRandomIndex = 0;
 
         /// <summary>
         /// A flag to control whether or not player objects are automatically created on connect, and on scene change.
@@ -216,6 +219,7 @@ namespace Mirror
             // always >= 0
             maxConnections = Mathf.Max(maxConnections, 0);
 
+            //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
             if (playerPrefab[0] != null && playerPrefab[0].GetComponent<NetworkIdentity>() == null)
             {
                 logger.LogError("NetworkManager - playerPrefab must have a NetworkIdentity.");
@@ -767,9 +771,10 @@ namespace Mirror
             NetworkClient.RegisterHandler<ErrorMessage>(OnClientErrorInternal, false);
             NetworkClient.RegisterHandler<SceneMessage>(OnClientSceneInternal, false);
 
-            if (playerPrefab[0] != null)
+            //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
+            if (playerPrefab[randomListIndex[currentRandomIndex]] != null)
             {
-                ClientScene.RegisterPrefab(playerPrefab[0]);
+                ClientScene.RegisterPrefab(playerPrefab[randomListIndex[currentRandomIndex]]);
             }
             for (int i = 0; i < spawnPrefabs.Count; i++)
             {
@@ -1199,13 +1204,14 @@ namespace Mirror
         {
             logger.Log("NetworkManager.OnServerAddPlayer");
 
-            if (autoCreatePlayer && playerPrefab[0] == null)
+            //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
+            if (autoCreatePlayer && playerPrefab[randomListIndex[currentRandomIndex]] == null)
             {
                 logger.LogError("The PlayerPrefab is empty on the NetworkManager. Please setup a PlayerPrefab object.");
                 return;
             }
 
-            if (autoCreatePlayer && playerPrefab[0].GetComponent<NetworkIdentity>() == null)
+            if (autoCreatePlayer && playerPrefab[randomListIndex[currentRandomIndex]].GetComponent<NetworkIdentity>() == null)
             {
                 logger.LogError("The PlayerPrefab does not have a NetworkIdentity. Please add a NetworkIdentity to the player prefab.");
                 return;
@@ -1344,10 +1350,11 @@ namespace Mirror
         /// <param name="conn">Connection from client.</param>
         public virtual void OnServerAddPlayer(NetworkConnection conn)
         {
+            //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
             Transform startPos = GetStartPosition();
             GameObject player = startPos != null
-                ? Instantiate(playerPrefab[0], startPos.position, startPos.rotation)
-                : Instantiate(playerPrefab[0]);
+                ? Instantiate(playerPrefab[randomListIndex[currentRandomIndex]], startPos.position, startPos.rotation)
+                : Instantiate(playerPrefab[randomListIndex[currentRandomIndex]]);
 
             NetworkServer.AddPlayerForConnection(conn, player);
         }
@@ -1489,5 +1496,22 @@ namespace Mirror
         public virtual void OnStopHost() { }
 
         #endregion
+
+        //CA::2020-12-20:: Tiro un random list para los minijuegos.
+        public virtual void randomizeMinigames(){
+            currentRandomIndex = 0;
+            randomListIndex.Clear();
+            for (int i = 0; i < playerPrefab.Count; i++)
+            {
+                randomListIndex.Add(i);
+            } 
+
+            for (int i = 0; i < randomListIndex.Count; i++) {
+                int temp = randomListIndex[i];
+                int randomIndex = Random.Range(i, randomListIndex.Count);
+                randomListIndex[i] = randomListIndex[randomIndex];
+                randomListIndex[randomIndex] = temp;
+            }  
+        }
     }
 }
