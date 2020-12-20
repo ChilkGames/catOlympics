@@ -4,6 +4,7 @@ namespace Mirror.Examples.NetworkRoom
 {
     internal class Spawner: MonoBehaviour
     {
+        /*
         internal static void InitialSpawn()
         {
             if (!NetworkServer.active) return;
@@ -19,5 +20,6 @@ namespace Mirror.Examples.NetworkRoom
             Vector3 spawnPosition = new Vector3(Random.Range(-19, 20), 1, Random.Range(-19, 20));
             NetworkServer.Spawn(Instantiate(((NetworkRoomManagerExt)NetworkManager.singleton).rewardPrefab, spawnPosition, Quaternion.identity));
         }
+        */
     }
 }
