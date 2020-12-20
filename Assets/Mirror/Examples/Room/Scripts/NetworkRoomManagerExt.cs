@@ -6,6 +6,8 @@ namespace Mirror.Examples.NetworkRoom
     [AddComponentMenu("")]
     public class NetworkRoomManagerExt : NetworkRoomManager
     {
+        public string PlayerName { get; set; }
+
         public override void Awake()
         {
             //CA::2020-12-20:: Tiro un random list para los minijuegos.
@@ -101,6 +103,48 @@ namespace Mirror.Examples.NetworkRoom
                 //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
                 ServerChangeScene(GameplayScene[randomListIndex[currentRandomIndex]]);
             }
+        }
+        
+        //CA::2020-12-20:: Me robo cosas del chat.
+        public struct CreatePlayerMessage : NetworkMessage
+        {
+            public string name;
+        }
+
+        /*
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            NetworkServer.RegisterHandler<CreatePlayerMessage>(OnCreatePlayer);
+        }
+        */
+        
+        public override void OnClientConnect(NetworkConnection conn)
+        {
+            base.OnClientConnect(conn);
+
+            // tell the server to create a player with this name
+            conn.Send(new CreatePlayerMessage { name = PlayerName });
+        }
+
+        /*
+        void OnCreatePlayer(NetworkConnection connection, CreatePlayerMessage createPlayerMessage)
+        {
+            // create a gameobject using the name supplied by client
+            GameObject playergo = Instantiate(playerPrefab);
+            playergo.GetComponent<Player>().playerName = createPlayerMessage.name;
+
+            // set it as the player
+            NetworkServer.AddPlayerForConnection(connection, playergo);
+
+            //chatWindow.gameObject.SetActive(true);
+        }
+        */
+
+        //ROBO Más
+        public void SetHostname(string hostname)
+        {
+            networkAddress = hostname;
         }
     }
 }

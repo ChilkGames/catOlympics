@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 2051458627924364048}
   - component: {fileID: 7514703430021453682}
   m_Layer: 0
-  m_Name: Minigame1-Controller (1)
-  m_TagString: Untagged
+  m_Name: Minigame2-Controller
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,4 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538b679fe6315e747932ee3de196f7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   speed: 1
