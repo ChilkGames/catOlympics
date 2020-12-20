@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 5831607812806621866}
   - component: {fileID: 5831607812806621867}
   - component: {fileID: 5831607812806621864}
+  - component: {fileID: 2657018622869382858}
   m_Layer: 0
-  m_Name: CatBlack (1)
+  m_Name: Minigame1-Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,3 +153,16 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
+--- !u!114 &2657018622869382858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717794330526789826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538b679fe6315e747932ee3de196f7f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
