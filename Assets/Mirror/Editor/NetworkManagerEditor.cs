@@ -8,7 +8,7 @@ namespace Mirror
     [CanEditMultipleObjects]
     public class NetworkManagerEditor : Editor
     {
-        SerializedProperty spawnListProperty;
+        /*SerializedProperty spawnListProperty;
 
         ReorderableList spawnList;
 
@@ -21,8 +21,8 @@ namespace Mirror
 
                 networkManager = target as NetworkManager;
 
-                spawnListProperty = serializedObject.FindProperty("spawnPrefabs");
-
+                //spawnListProperty = serializedObject.FindProperty("spawnPrefabs");
+                
                 spawnList = new ReorderableList(serializedObject, spawnListProperty)
                 {
                     drawHeaderCallback = DrawHeader,
@@ -34,6 +34,7 @@ namespace Mirror
                     // this uses a 16x16 icon. other sizes make it stretch.
                     elementHeight = 16
                 };
+                
             }
         }
 
@@ -48,12 +49,12 @@ namespace Mirror
                 serializedObject.ApplyModifiedProperties();
             }
         }
-
+        /*
         static void DrawHeader(Rect headerRect)
         {
             GUI.Label(headerRect, "Registered Spawnable Prefabs:");
         }
-
+    
         internal void DrawChild(Rect r, int index, bool isActive, bool isFocused)
         {
             SerializedProperty prefab = spawnListProperty.GetArrayElementAtIndex(index);
@@ -79,15 +80,15 @@ namespace Mirror
                     Debug.LogError("Prefab " + newGameObject + " cannot be added as spawnable as it doesn't have a NetworkIdentity.");
                     return;
                 }
-                prefab.objectReferenceValue = newGameObject;
+                /*prefab.objectReferenceValue = newGameObject;
             }
         }
-
+        
         internal void Changed(ReorderableList list)
         {
             EditorUtility.SetDirty(target);
         }
-
+        
         internal void AddButton(ReorderableList list)
         {
             spawnListProperty.arraySize += 1;
@@ -109,5 +110,6 @@ namespace Mirror
                 list.index = spawnListProperty.arraySize - 1;
             }
         }
+        */
     }
 }

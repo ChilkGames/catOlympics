@@ -53,8 +53,8 @@ namespace Mirror
         /// The scene to use for the playing the game from the room. This is similar to the onlineScene of the NetworkManager.
         /// </summary>
         [Scene]
-        public string GameplayScene;
 
+        public List<string> GameplayScene;
         /// <summary>
         /// List of players that are in the Room
         /// </summary>
@@ -186,8 +186,8 @@ namespace Mirror
                 // get start position from base class
                 Transform startPos = GetStartPosition();
                 gamePlayer = startPos != null
-                    ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
-                    : Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+                    ? Instantiate(playerPrefab[0], startPos.position, startPos.rotation)
+                    : Instantiate(playerPrefab[0], Vector3.zero, Quaternion.identity);
             }
 
             if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))
@@ -407,7 +407,7 @@ namespace Mirror
                 return;
             }
 
-            if (string.IsNullOrEmpty(GameplayScene))
+            if (string.IsNullOrEmpty(GameplayScene[0]))
             {
                 logger.LogError("NetworkRoomManager PlayScene is empty. Set the PlayScene in the inspector for the NetworkRoomManager");
                 return;
@@ -456,7 +456,7 @@ namespace Mirror
             else
                 ClientScene.RegisterPrefab(roomPlayerPrefab.gameObject);
 
-            if (playerPrefab == null)
+            if (playerPrefab[0] == null)
                 logger.LogError("NetworkRoomManager no GamePlayer prefab is registered. Please add a GamePlayer prefab.");
 
             OnRoomStartClient();
@@ -610,7 +610,7 @@ namespace Mirror
         public virtual void OnRoomServerPlayersReady()
         {
             // all players are readyToBegin, start the game
-            ServerChangeScene(GameplayScene);
+            ServerChangeScene(GameplayScene[0]);
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Mirror
             if (!showRoomGUI)
                 return;
 
-            if (NetworkServer.active && IsSceneActive(GameplayScene))
+            if (NetworkServer.active && IsSceneActive(GameplayScene[0]))
             {
                 GUILayout.BeginArea(new Rect(Screen.width - 150f, 10f, 140f, 30f));
                 if (GUILayout.Button("Return to Room"))

@@ -6,10 +6,12 @@ namespace Mirror.Examples.NetworkRoom
     [AddComponentMenu("")]
     public class NetworkRoomManagerExt : NetworkRoomManager
     {
+        /*
         [Header("Spawner Setup")]
         [Tooltip("Reward Prefab for the Spawner")]
-        public GameObject rewardPrefab;
+        public GameObject rewardPrefab;*/
 
+        /*
         /// <summary>
         /// This is called on the server when a networked scene finishes loading.
         /// </summary>
@@ -22,6 +24,7 @@ namespace Mirror.Examples.NetworkRoom
                 Spawner.InitialSpawn();
             }
         }
+        */
 
         /// <summary>
         /// Called just after GamePlayer object is instantiated and just before it replaces RoomPlayer object.
@@ -88,7 +91,7 @@ namespace Mirror.Examples.NetworkRoom
                 // set to false to hide it in the game scene
                 showStartButton = false;
 
-                ServerChangeScene(GameplayScene);
+                ServerChangeScene(GameplayScene[0]);
             }
         }
     }
