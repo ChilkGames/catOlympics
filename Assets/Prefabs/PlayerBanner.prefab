@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 6427563445442944394}
   - component: {fileID: 6427563445442944395}
   - component: {fileID: 6590123824487021000}
-  - component: {fileID: 2755257411656976387}
-  - component: {fileID: 7750467534329735400}
   m_Layer: 5
   m_Name: PlayerBanner
   m_TagString: Untagged
@@ -112,38 +110,6 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &2755257411656976387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427563445442944397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41fc608223969754e817c29908fdb1d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  showRoomGUI: 1
-  readyToBegin: 0
-  index: 0
---- !u!114 &7750467534329735400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6427563445442944397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 014632a3d75780a4ba5b94a459c6c187, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  playerName: 
 --- !u!1 &6427563445548235703
 GameObject:
   m_ObjectHideFlags: 0

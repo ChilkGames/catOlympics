@@ -42,6 +42,9 @@ namespace Mirror
         [SerializeField]
         [Tooltip("Prefab to use for the Room Player")]
         public NetworkRoomPlayer roomPlayerPrefab;
+        public GameObject roomPlayerBannerPrefab;
+        int numberOfBanners = 0;
+
 
         /// <summary>
         /// The scene to use for the room. This is similar to the offlineScene of the NetworkManager.
@@ -326,8 +329,14 @@ namespace Mirror
                 if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "NetworkRoomManager.OnServerAddPlayer playerPrefab:{0}", roomPlayerPrefab.name);
 
                 GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
+                GameObject newRoomBannerGameObject = OnRoomServerCreateRoomPlayer(conn);
+
                 if (newRoomGameObject == null)
+                {
                     newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+                    newRoomBannerGameObject = Instantiate(roomPlayerBannerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+                    generateBanner(newRoomBannerGameObject);
+                }
 
                 NetworkServer.AddPlayerForConnection(conn, newRoomGameObject);
             }
@@ -697,6 +706,25 @@ namespace Mirror
                 GUI.Box(new Rect(10f, 180f, 520f, 150f), "PLAYERS");
         }
 
+        public virtual void generateBanner(GameObject banner){
+            banner.transform.parent = GameObject.Find("Canvas").transform; 
+            banner.transform.localScale = new Vector3(1,1,1);
+            numberOfBanners++;
+            switch(numberOfBanners){
+                case 1:
+                    banner.GetComponent<RectTransform>().localPosition = new Vector3(-700, 110, 0);
+                    break;
+                case 2:
+                    banner.GetComponent<RectTransform>().localPosition = new Vector3(-245, 110, 0);
+                    break;
+                case 3:
+                    banner.GetComponent<RectTransform>().localPosition = new Vector3(210, 110, 0);
+                    break;
+                default:
+                    banner.GetComponent<RectTransform>().localPosition = new Vector3(665, 110, 0);
+                    break;
+            }
+        }
         #endregion
     }
 }

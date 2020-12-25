@@ -1447,7 +1447,9 @@ MonoBehaviour:
   - {fileID: 0}
   showRoomGUI: 1
   minPlayers: 1
-  roomPlayerPrefab: {fileID: 2755257411656976387, guid: 9de0e5b12542049409ae284f038dc724,
+  roomPlayerPrefab: {fileID: 114033720796874720, guid: deae2134a1d77704b9c595efe69767dd,
+    type: 3}
+  roomPlayerBannerPrefab: {fileID: 6427563445442944397, guid: 9de0e5b12542049409ae284f038dc724,
     type: 3}
   RoomScene: Assets/Scenes/Lobby.unity
   GameplayScene:
