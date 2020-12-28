@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Mirror.Examples.NetworkRoom
 {
@@ -95,13 +96,20 @@ namespace Mirror.Examples.NetworkRoom
         {
             base.OnGUI();
 
-            if (allPlayersReady && showStartButton && GUI.Button(new Rect(150, 300, 120, 20), "START GAME"))
-            {
-                // set to false to hide it in the game scene
-                showStartButton = false;
-
-                //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
-                ServerChangeScene(GameplayScene[randomListIndex[currentRandomIndex]]);
+            if("Lobby" == SceneManager.GetActiveScene().name){
+                if (allPlayersReady)
+                {
+                    if(showStartButton){
+                        showStartButton = false;
+                        GameObject.Find("StartBtn").GetComponent<Button>().interactable = true;
+                        GameObject.Find("StartBtn").GetComponent<Button>().onClick.AddListener(nextLevel);               
+                        GameObject.Find("StartBtn").transform.GetChild(0).GetComponent<Text>().text = "Start Game";
+                    }
+                }
+                else{
+                    GameObject.Find("StartBtn").GetComponent<Button>().interactable = false;
+                    GameObject.Find("StartBtn").transform.GetChild(0).GetComponent<Text>().text = "";
+                }
             }
         }
         
@@ -145,6 +153,11 @@ namespace Mirror.Examples.NetworkRoom
         public void SetHostname(string hostname)
         {
             networkAddress = hostname;
+        }
+
+        public void nextLevel(){
+            NetworkServer.SendToAll(new RandomList { randomList = randomListIndex });
+            ServerChangeScene(GameplayScene[randomListIndex[currentRandomIndex]]);
         }
     }
 }

@@ -770,11 +770,12 @@ namespace Mirror
             NetworkClient.RegisterHandler<NotReadyMessage>(OnClientNotReadyMessageInternal);
             NetworkClient.RegisterHandler<ErrorMessage>(OnClientErrorInternal, false);
             NetworkClient.RegisterHandler<SceneMessage>(OnClientSceneInternal, false);
+            NetworkClient.RegisterHandler<RandomList>(OnClientRandomListInternal, false);
 
             //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
-            if (playerPrefab[randomListIndex[currentRandomIndex]] != null)
+            if (playerPrefab[0] != null)
             {
-                ClientScene.RegisterPrefab(playerPrefab[randomListIndex[currentRandomIndex]]);
+                ClientScene.RegisterPrefab(playerPrefab[0]);
             }
             for (int i = 0; i < spawnPrefabs.Count; i++)
             {
@@ -1205,13 +1206,13 @@ namespace Mirror
             logger.Log("NetworkManager.OnServerAddPlayer");
 
             //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
-            if (autoCreatePlayer && playerPrefab[randomListIndex[currentRandomIndex]] == null)
+            if (autoCreatePlayer && playerPrefab[0] == null)
             {
                 logger.LogError("The PlayerPrefab is empty on the NetworkManager. Please setup a PlayerPrefab object.");
                 return;
             }
 
-            if (autoCreatePlayer && playerPrefab[randomListIndex[currentRandomIndex]].GetComponent<NetworkIdentity>() == null)
+            if (autoCreatePlayer && playerPrefab[0].GetComponent<NetworkIdentity>() == null)
             {
                 logger.LogError("The PlayerPrefab does not have a NetworkIdentity. Please add a NetworkIdentity to the player prefab.");
                 return;
@@ -1306,6 +1307,16 @@ namespace Mirror
             }
         }
 
+        void OnClientRandomListInternal(NetworkConnection conn, RandomList msg)
+        {
+            logger.Log("NetworkManager.OnClientRandomListInternal");
+
+            if (NetworkClient.isConnected && !NetworkServer.active)
+            {
+                randomListIndex = msg.randomList;
+            }
+        }
+
         #endregion
 
         #region Server System Callbacks
@@ -1353,8 +1364,8 @@ namespace Mirror
             //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
             Transform startPos = GetStartPosition();
             GameObject player = startPos != null
-                ? Instantiate(playerPrefab[randomListIndex[currentRandomIndex]], startPos.position, startPos.rotation)
-                : Instantiate(playerPrefab[randomListIndex[currentRandomIndex]]);
+                ? Instantiate(playerPrefab[0], startPos.position, startPos.rotation)
+                : Instantiate(playerPrefab[0]);
 
             NetworkServer.AddPlayerForConnection(conn, player);
         }

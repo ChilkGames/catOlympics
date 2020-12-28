@@ -63,9 +63,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  showRoomGUI: 1
+  showRoomGUI: 0
   readyToBegin: 0
   index: 0
+  playerName: 
+  playerBanner: {fileID: 0}
+  roomPlayerBannerPrefab: {fileID: 6427563445442944397, guid: 9de0e5b12542049409ae284f038dc724,
+    type: 3}
 --- !u!114 &3207215422420255635
 MonoBehaviour:
   m_ObjectHideFlags: 0

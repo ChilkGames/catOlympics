@@ -26,6 +26,7 @@ namespace Mirror
             public GameObject roomPlayer;
         }
 
+        /*********************************************************************************************************************************/
         [Header("Room Settings")]
 
         [FormerlySerializedAs("m_ShowRoomGUI")]
@@ -58,6 +59,9 @@ namespace Mirror
         /// <summary>
         /// List of players that are in the Room
         /// </summary>
+
+        /*********************************************************************************************************************************/
+
         [FormerlySerializedAs("m_PendingPlayers")]
         public List<PendingPlayer> pendingPlayers = new List<PendingPlayer>();
 
@@ -187,8 +191,8 @@ namespace Mirror
                 //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
                 Transform startPos = GetStartPosition();
                 gamePlayer = startPos != null
-                    ? Instantiate(playerPrefab[randomListIndex[currentRandomIndex]], startPos.position, startPos.rotation)
-                    : Instantiate(playerPrefab[randomListIndex[currentRandomIndex]], Vector3.zero, Quaternion.identity);
+                    ? Instantiate(playerPrefab[0], startPos.position, startPos.rotation)
+                    : Instantiate(playerPrefab[0], Vector3.zero, Quaternion.identity);
             }
 
             if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))
@@ -326,8 +330,11 @@ namespace Mirror
                 if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "NetworkRoomManager.OnServerAddPlayer playerPrefab:{0}", roomPlayerPrefab.name);
 
                 GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
+
                 if (newRoomGameObject == null)
+                {
                     newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+                }
 
                 NetworkServer.AddPlayerForConnection(conn, newRoomGameObject);
             }
@@ -459,7 +466,7 @@ namespace Mirror
             else
                 ClientScene.RegisterPrefab(roomPlayerPrefab.gameObject);
 
-            if (playerPrefab[randomListIndex[currentRandomIndex]] == null)
+            if (playerPrefab[0] == null)
                 logger.LogError("NetworkRoomManager no GamePlayer prefab is registered. Please add a GamePlayer prefab.");
 
             OnRoomStartClient();
@@ -681,10 +688,12 @@ namespace Mirror
         /// </summary>
         public virtual void OnGUI()
         {
-            if (!showRoomGUI)
+            if (!showRoomGUI){
+                showBackToLobby();
                 return;
+            }
 
-            //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
+            /*CA::::Si estamos adentro del minigame permite volver al lobby, pero no queremos esto, solo necesitamos que vuelva cuando ese minigame se termine.*/
             if (NetworkServer.active && IsSceneActive(GameplayScene[randomListIndex[currentRandomIndex]]))
             {
                 GUILayout.BeginArea(new Rect(Screen.width - 150f, 10f, 140f, 30f));
@@ -693,10 +702,24 @@ namespace Mirror
                 GUILayout.EndArea();
             }
 
+            /*Solo muestra la parte con los jugadores.*/
             if (IsSceneActive(RoomScene))
                 GUI.Box(new Rect(10f, 180f, 520f, 150f), "PLAYERS");
         }
-
         #endregion
+
+        //CA::::
+        void showBackToLobby(){
+            /*CA::::Si estamos adentro del minigame permite volver al lobby, pero no queremos esto, solo necesitamos que vuelva cuando ese minigame se termine.*/
+            /*
+            if (NetworkServer.active && IsSceneActive(GameplayScene[randomListIndex[currentRandomIndex]]))
+            {
+                GUILayout.BeginArea(new Rect(Screen.width - 150f, 10f, 140f, 30f));
+                if (GUILayout.Button("Return to Room"))
+                    ServerChangeScene(RoomScene);
+                GUILayout.EndArea();
+            }
+            */
+        }
     }
 }
