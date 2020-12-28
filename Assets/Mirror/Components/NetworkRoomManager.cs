@@ -191,8 +191,8 @@ namespace Mirror
                 //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
                 Transform startPos = GetStartPosition();
                 gamePlayer = startPos != null
-                    ? Instantiate(playerPrefab[randomListIndex[currentRandomIndex]], startPos.position, startPos.rotation)
-                    : Instantiate(playerPrefab[randomListIndex[currentRandomIndex]], Vector3.zero, Quaternion.identity);
+                    ? Instantiate(playerPrefab[0], startPos.position, startPos.rotation)
+                    : Instantiate(playerPrefab[0], Vector3.zero, Quaternion.identity);
             }
 
             if (!OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer))
@@ -466,7 +466,7 @@ namespace Mirror
             else
                 ClientScene.RegisterPrefab(roomPlayerPrefab.gameObject);
 
-            if (playerPrefab[randomListIndex[currentRandomIndex]] == null)
+            if (playerPrefab[0] == null)
                 logger.LogError("NetworkRoomManager no GamePlayer prefab is registered. Please add a GamePlayer prefab.");
 
             OnRoomStartClient();

@@ -1748,7 +1748,7 @@ MonoBehaviour:
   authenticator: {fileID: 0}
   playerPrefab:
   - {fileID: 2717794330526789826, guid: 99c7add660eda6f4187409ef139f3a65, type: 3}
-  - {fileID: 2717794330526789826, guid: 99c7add660eda6f4187409ef139f3a65, type: 3}
+  - {fileID: 650881574208898141, guid: 46d6b42f4437a8440a4f4243fccf966c, type: 3}
   randomListIndex: 
   currentRandomIndex: 0
   autoCreatePlayer: 1
@@ -1762,7 +1762,7 @@ MonoBehaviour:
   RoomScene: Assets/Scenes/Lobby.unity
   GameplayScene:
   - Assets/Scenes/Minigame1.unity
-  - Assets/Scenes/Minigame1.unity
+  - Assets/Scenes/Minigame2.unity
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
