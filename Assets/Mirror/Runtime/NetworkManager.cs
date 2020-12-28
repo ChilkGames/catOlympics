@@ -770,6 +770,7 @@ namespace Mirror
             NetworkClient.RegisterHandler<NotReadyMessage>(OnClientNotReadyMessageInternal);
             NetworkClient.RegisterHandler<ErrorMessage>(OnClientErrorInternal, false);
             NetworkClient.RegisterHandler<SceneMessage>(OnClientSceneInternal, false);
+            NetworkClient.RegisterHandler<RandomList>(OnClientRandomListInternal, false);
 
             //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
             if (playerPrefab[0] != null)
@@ -1303,6 +1304,16 @@ namespace Mirror
             if (NetworkClient.isConnected && !NetworkServer.active)
             {
                 ClientChangeScene(msg.sceneName, msg.sceneOperation, msg.customHandling);
+            }
+        }
+
+        void OnClientRandomListInternal(NetworkConnection conn, RandomList msg)
+        {
+            logger.Log("NetworkManager.OnClientRandomListInternal");
+
+            if (NetworkClient.isConnected && !NetworkServer.active)
+            {
+                randomListIndex = msg.randomList;
             }
         }
 

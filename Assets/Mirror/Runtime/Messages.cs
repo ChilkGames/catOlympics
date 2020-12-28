@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
+
 
 namespace Mirror
 {
@@ -40,6 +42,11 @@ namespace Mirror
         // Normal = 0, LoadAdditive = 1, UnloadAdditive = 2
         public SceneOperation sceneOperation;
         public bool customHandling;
+    }
+
+    public struct RandomList : NetworkMessage
+    {
+        public List<int> randomList;
     }
 
     public enum SceneOperation : byte

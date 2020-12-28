@@ -156,6 +156,7 @@ namespace Mirror.Examples.NetworkRoom
         }
 
         public void nextLevel(){
+            NetworkServer.SendToAll(new RandomList { randomList = randomListIndex });
             ServerChangeScene(GameplayScene[randomListIndex[currentRandomIndex]]);
         }
     }
