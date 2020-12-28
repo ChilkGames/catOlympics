@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mirror
 {
@@ -37,6 +38,9 @@ namespace Mirror
         [Tooltip("Diagnostic index of the player, e.g. Player1, Player2, etc.")]
         [SyncVar(hook = nameof(IndexChanged))]
         public int index;
+        public string playerName;
+
+        public GameObject playerBanner;
 
         #region Unity Callbacks
 
@@ -117,7 +121,8 @@ namespace Mirror
         /// This is a hook that is invoked on clients for all room player objects when entering the room.
         /// <para>Note: isLocalPlayer is not guaranteed to be set until OnStartLocalPlayer is called.</para>
         /// </summary>
-        public virtual void OnClientEnterRoom() { }
+        public virtual void OnClientEnterRoom() {
+        }
 
         /// <summary>
         /// This is a hook that is invoked on clients for all room player objects when exiting the room.
@@ -133,8 +138,10 @@ namespace Mirror
         /// </summary>
         public virtual void OnGUI()
         {
-            if (!showRoomGUI)
+            if (!showRoomGUI){
+                showBanners();
                 return;
+            }
 
             NetworkRoomManager room = NetworkManager.singleton as NetworkRoomManager;
             if (room)
@@ -194,5 +201,76 @@ namespace Mirror
         }
 
         #endregion
+
+        //CA::::
+        void showBanners(){
+            NetworkRoomManager room = NetworkManager.singleton as NetworkRoomManager;
+
+            if (room && playerBanner != null)
+            {
+                if (!NetworkManager.IsSceneActive(room.RoomScene))
+                    return;
+
+                /*DRAW PLAYER READY STATE*/
+                playerBanner.transform.GetChild(1).GetComponent<Text>().text = playerName;
+                if (readyToBegin)
+                {
+                    playerBanner.transform.GetChild(2).transform.GetChild(0).GetComponent<Text>().text = "Ready!";
+                    var newColorBlock = playerBanner.transform.GetChild(2).gameObject.GetComponent<Button>().colors;
+                    newColorBlock.disabledColor = new Color(0.1826273f,0.6792453f,0.2567928f,1);
+                    playerBanner.transform.GetChild(2).gameObject.GetComponent<Button>().colors = newColorBlock;
+                }
+                else{
+                    playerBanner.transform.GetChild(2).transform.GetChild(0).GetComponent<Text>().text = "Not Ready";
+                    var newColorBlock = playerBanner.transform.GetChild(2).gameObject.GetComponent<Button>().colors;
+                    newColorBlock.disabledColor = new Color(0.745283f,0.1089801f,0.1210705f,1);
+                    playerBanner.transform.GetChild(2).gameObject.GetComponent<Button>().colors = newColorBlock;
+                }
+
+                if ((isServer && index > 0) || isServerOnly)
+                {
+                    if (playerBanner.transform.GetChild(3).gameObject != null)
+                    {
+                        playerBanner.transform.GetChild(3).gameObject.SetActive(true);
+                        playerBanner.transform.GetChild(3).gameObject.GetComponent<Button>().onClick.AddListener(btnKick);
+                    }    
+
+                }
+                else{
+                    if (playerBanner.transform.GetChild(3).gameObject != null)
+                        playerBanner.transform.GetChild(3).gameObject.SetActive(false);
+                }
+
+                /*DRAW PLAYER READY BUTTON*/
+                if (NetworkClient.active && isLocalPlayer)
+                {
+                    if (readyToBegin)
+                    {
+                        playerBanner.transform.GetChild(2).transform.GetChild(0).GetComponent<Text>().text = "Cancel";
+                        playerBanner.transform.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(btnNotReady);
+                    }
+                    else
+                    {
+                        playerBanner.transform.GetChild(2).transform.GetChild(0).GetComponent<Text>().text = "Ready!";
+                        playerBanner.transform.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(btnReady);
+                    }
+                }
+                else{
+                    playerBanner.transform.GetChild(2).GetComponent<Button>().interactable = false;
+                }
+            }
+
+            void btnKick(){
+                GetComponent<NetworkIdentity>().connectionToClient.Disconnect();
+            }
+
+            void btnReady(){
+                CmdChangeReadyState(true);
+            }
+
+            void btnNotReady(){
+                CmdChangeReadyState(false);
+            }
+        }
     }
 }

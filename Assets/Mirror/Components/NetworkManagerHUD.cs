@@ -1,6 +1,8 @@
 // vis2k: GUILayout instead of spacey += ...; removed Update hotkeys to avoid
 // confusion if someone accidentally presses one.
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Mirror
 {
@@ -31,6 +33,8 @@ namespace Mirror
         /// </summary>
         public int offsetY;
 
+        /*********************************************************************************************/
+
         void Awake()
         {
             manager = GetComponent<NetworkManager>();
@@ -38,8 +42,13 @@ namespace Mirror
 
         void OnGUI()
         {
+            //Main Menu
             if (!showGUI)
+            {
+                //CA::
+                checkMenuButtons();
                 return;
+            }
 
             GUILayout.BeginArea(new Rect(10 + offsetX, 40 + offsetY, 215, 9999));
             if (!NetworkClient.isConnected && !NetworkServer.active)
@@ -51,7 +60,7 @@ namespace Mirror
                 StatusLabels();
             }
 
-            // client ready
+            // client ready (LOBBY)
             if (NetworkClient.isConnected && !ClientScene.ready)
             {
                 if (GUILayout.Button("Client Ready"))
@@ -151,6 +160,45 @@ namespace Mirror
                 if (GUILayout.Button("Stop Server"))
                 {
                     manager.StopServer();
+                }
+            }
+        }
+
+        void checkMenuButtons(){
+            if (!NetworkClient.active)
+            {
+                if (!NetworkClient.isConnected && !NetworkServer.active)
+                {
+                    if("Main Menu" == SceneManager.GetActiveScene().name){
+                        if (Application.platform == RuntimePlatform.WebGLPlayer){
+                            GameObject.Find("HostButton").GetComponent<Button>().interactable = false;
+                            GameObject.Find("ServerOnlyButton").GetComponent<Button>().interactable = false;
+                        }
+                        else{
+                            GameObject.Find("HostButton").GetComponent<Button>().interactable = true;
+                            GameObject.Find("ServerOnlyButton").GetComponent<Button>().interactable = true;
+                        }
+                    }
+                }
+            }
+            
+            if("Lobby" == SceneManager.GetActiveScene().name){
+                // stop host if host mode
+                if(GameObject.Find("DisconnectServer") != null){
+                    if (NetworkServer.active && NetworkClient.isConnected)
+                    {
+                        GameObject.Find("DisconnectServer").GetComponent<Button>().onClick.AddListener(manager.StopHost);
+                    }
+                    // stop client if client-only
+                    else if (NetworkClient.isConnected)
+                    {
+                        GameObject.Find("DisconnectServer").GetComponent<Button>().onClick.AddListener(manager.StopClient);
+                    }
+                    // stop server if server-only
+                    else if (NetworkServer.active)
+                    {
+                        GameObject.Find("DisconnectServer").GetComponent<Button>().onClick.AddListener(manager.StopHost);
+                    }
                 }
             }
         }

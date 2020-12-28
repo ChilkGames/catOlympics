@@ -26,6 +26,7 @@ namespace Mirror
             public GameObject roomPlayer;
         }
 
+        /*********************************************************************************************************************************/
         [Header("Room Settings")]
 
         [FormerlySerializedAs("m_ShowRoomGUI")]
@@ -42,7 +43,6 @@ namespace Mirror
         [SerializeField]
         [Tooltip("Prefab to use for the Room Player")]
         public NetworkRoomPlayer roomPlayerPrefab;
-        public GameObject roomPlayerBannerPrefab;
         int numberOfBanners = 0;
 
 
@@ -61,6 +61,9 @@ namespace Mirror
         /// <summary>
         /// List of players that are in the Room
         /// </summary>
+
+        /*********************************************************************************************************************************/
+
         [FormerlySerializedAs("m_PendingPlayers")]
         public List<PendingPlayer> pendingPlayers = new List<PendingPlayer>();
 
@@ -329,13 +332,10 @@ namespace Mirror
                 if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "NetworkRoomManager.OnServerAddPlayer playerPrefab:{0}", roomPlayerPrefab.name);
 
                 GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
-                GameObject newRoomBannerGameObject = OnRoomServerCreateRoomPlayer(conn);
 
                 if (newRoomGameObject == null)
                 {
                     newRoomGameObject = Instantiate(roomPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
-                    newRoomBannerGameObject = Instantiate(roomPlayerBannerPrefab.gameObject, Vector3.zero, Quaternion.identity);
-                    generateBanner(newRoomBannerGameObject);
                 }
 
                 NetworkServer.AddPlayerForConnection(conn, newRoomGameObject);
@@ -690,10 +690,12 @@ namespace Mirror
         /// </summary>
         public virtual void OnGUI()
         {
-            if (!showRoomGUI)
+            if (!showRoomGUI){
+                showBackToLobby();
                 return;
+            }
 
-            //CA::2020-12-20:: Checkeo que por lo menos el primer minigame exista.
+            /*CA::::Si estamos adentro del minigame permite volver al lobby, pero no queremos esto, solo necesitamos que vuelva cuando ese minigame se termine.*/
             if (NetworkServer.active && IsSceneActive(GameplayScene[randomListIndex[currentRandomIndex]]))
             {
                 GUILayout.BeginArea(new Rect(Screen.width - 150f, 10f, 140f, 30f));
@@ -702,29 +704,24 @@ namespace Mirror
                 GUILayout.EndArea();
             }
 
+            /*Solo muestra la parte con los jugadores.*/
             if (IsSceneActive(RoomScene))
                 GUI.Box(new Rect(10f, 180f, 520f, 150f), "PLAYERS");
         }
-
-        public virtual void generateBanner(GameObject banner){
-            banner.transform.parent = GameObject.Find("Canvas").transform; 
-            banner.transform.localScale = new Vector3(1,1,1);
-            numberOfBanners++;
-            switch(numberOfBanners){
-                case 1:
-                    banner.GetComponent<RectTransform>().localPosition = new Vector3(-700, 110, 0);
-                    break;
-                case 2:
-                    banner.GetComponent<RectTransform>().localPosition = new Vector3(-245, 110, 0);
-                    break;
-                case 3:
-                    banner.GetComponent<RectTransform>().localPosition = new Vector3(210, 110, 0);
-                    break;
-                default:
-                    banner.GetComponent<RectTransform>().localPosition = new Vector3(665, 110, 0);
-                    break;
-            }
-        }
         #endregion
+
+        //CA::::
+        void showBackToLobby(){
+            /*CA::::Si estamos adentro del minigame permite volver al lobby, pero no queremos esto, solo necesitamos que vuelva cuando ese minigame se termine.*/
+            /*
+            if (NetworkServer.active && IsSceneActive(GameplayScene[randomListIndex[currentRandomIndex]]))
+            {
+                GUILayout.BeginArea(new Rect(Screen.width - 150f, 10f, 140f, 30f));
+                if (GUILayout.Button("Return to Room"))
+                    ServerChangeScene(RoomScene);
+                GUILayout.EndArea();
+            }
+            */
+        }
     }
 }
