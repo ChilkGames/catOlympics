@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7575544006653903226
+--- !u!1 &650881574208898141
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,13 +8,13 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7575544006653903228}
-  - component: {fileID: 7575544006653903229}
-  - component: {fileID: 5232407020966062733}
-  - component: {fileID: 2051458627924364050}
-  - component: {fileID: 2051458627924364051}
-  - component: {fileID: 2051458627924364048}
-  - component: {fileID: 7514703430021453682}
+  - component: {fileID: 650881574208898117}
+  - component: {fileID: 650881574208898122}
+  - component: {fileID: 650881574208898169}
+  - component: {fileID: 650881574208898144}
+  - component: {fileID: 650881574208898145}
+  - component: {fileID: 650881574208898147}
+  - component: {fileID: 650881574208898172}
   m_Layer: 0
   m_Name: Minigame2-Controller
   m_TagString: Player
@@ -22,27 +22,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7575544006653903228
+--- !u!4 &650881574208898117
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575544006653903226}
+  m_GameObject: {fileID: 650881574208898141}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.992883, y: -1.6370106, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7575544006653903229
+--- !u!212 &650881574208898122
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575544006653903226}
+  m_GameObject: {fileID: 650881574208898141}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -86,13 +86,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5232407020966062733
+--- !u!114 &650881574208898169
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575544006653903226}
+  m_GameObject: {fileID: 650881574208898141}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
@@ -102,13 +102,13 @@ MonoBehaviour:
   serverOnly: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &2051458627924364050
+--- !u!114 &650881574208898144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575544006653903226}
+  m_GameObject: {fileID: 650881574208898141}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ba998ee2eff92a419f4377519caf095, type: 3}
@@ -118,13 +118,13 @@ MonoBehaviour:
   syncInterval: 0
   index: 0
   score: 0
---- !u!114 &2051458627924364051
+--- !u!114 &650881574208898145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575544006653903226}
+  m_GameObject: {fileID: 650881574208898141}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e6a8bf08f02e254aa9a52ef0aaa1553, type: 3}
@@ -135,13 +135,13 @@ MonoBehaviour:
   color:
     serializedVersion: 2
     rgba: 4278190080
---- !u!114 &2051458627924364048
+--- !u!114 &650881574208898147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575544006653903226}
+  m_GameObject: {fileID: 650881574208898141}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
@@ -153,13 +153,13 @@ MonoBehaviour:
   localPositionSensitivity: 0.01
   localRotationSensitivity: 0.01
   localScaleSensitivity: 0.01
---- !u!114 &7514703430021453682
+--- !u!114 &650881574208898172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575544006653903226}
+  m_GameObject: {fileID: 650881574208898141}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 538b679fe6315e747932ee3de196f7f0, type: 3}

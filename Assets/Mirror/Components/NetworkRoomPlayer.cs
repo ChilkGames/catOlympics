@@ -75,7 +75,9 @@ namespace Mirror
             {
                 // only need to call this on client as server removes it before object is destroyed
                 //CA:::: FUNCIONAAAA
-                destroyBanner();
+                if(playerBanner != null){
+                    destroyBanner();
+                }
                 room.roomSlots.Remove(this);
 
                 room.CallOnClientExitRoom();

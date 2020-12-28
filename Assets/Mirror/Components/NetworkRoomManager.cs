@@ -43,8 +43,6 @@ namespace Mirror
         [SerializeField]
         [Tooltip("Prefab to use for the Room Player")]
         public NetworkRoomPlayer roomPlayerPrefab;
-        int numberOfBanners = 0;
-
 
         /// <summary>
         /// The scene to use for the room. This is similar to the offlineScene of the NetworkManager.

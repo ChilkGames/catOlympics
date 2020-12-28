@@ -29,7 +29,6 @@ namespace Mirror.Examples.NetworkRoom
 
         public override void OnClientExitRoom()
         {
-            //destroyBanner();
             if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "OnClientExitRoom {0}", SceneManager.GetActiveScene().path);
         }
 
