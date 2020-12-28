@@ -74,6 +74,8 @@ namespace Mirror
             if (NetworkClient.active && NetworkManager.singleton is NetworkRoomManager room)
             {
                 // only need to call this on client as server removes it before object is destroyed
+                //CA:::: FUNCIONAAAA
+                destroyBanner();
                 room.roomSlots.Remove(this);
 
                 room.CallOnClientExitRoom();
@@ -271,6 +273,10 @@ namespace Mirror
             void btnNotReady(){
                 CmdChangeReadyState(false);
             }
+
+        }
+        public virtual void destroyBanner(){
+            //
         }
     }
 }

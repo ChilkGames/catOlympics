@@ -22,13 +22,15 @@ namespace Mirror.Examples.NetworkRoom
         public override void OnClientEnterRoom()
         {
             if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "OnClientEnterRoom {0}", SceneManager.GetActiveScene().path);
-            generateBanner();
+            if(!bannerDisplayed){
+                generateBanner();
+            }
         }
 
         public override void OnClientExitRoom()
         {
+            //destroyBanner();
             if (logger.LogEnabled()) logger.LogFormat(LogType.Log, "OnClientExitRoom {0}", SceneManager.GetActiveScene().path);
-            destroyBanner();
         }
 
         public override void ReadyStateChanged(bool _, bool newReadyState)
@@ -62,7 +64,8 @@ namespace Mirror.Examples.NetworkRoom
             bannerDisplayed = true;
         }
 
-        void destroyBanner(){
+        public override void destroyBanner(){
+            Destroy(playerBanner);
             bannerDisplayed = false;
         }
     }
