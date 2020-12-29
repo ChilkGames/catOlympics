@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 5831607812806621867}
   - component: {fileID: 5831607812806621864}
   - component: {fileID: 2657018622869382858}
+  - component: {fileID: 5536718133540484343}
+  - component: {fileID: 5427948830449701562}
   m_Layer: 0
   m_Name: Minigame1-Controller
   m_TagString: Player
@@ -165,4 +167,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538b679fe6315e747932ee3de196f7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   speed: 1
+  animator: {fileID: 5536718133540484343}
+--- !u!95 &5536718133540484343
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717794330526789826}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b841e51e0f8737a4d91f30e9bb02b04c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &5427948830449701562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2717794330526789826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f6f3bf89aa97405989c802ba270f815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  animator: {fileID: 5536718133540484343}

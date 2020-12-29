@@ -7,11 +7,14 @@ public class ButtonMashingEvent : NetworkBehaviour
 {
     public float speed;
 
+    public Animator animator;
+
     // Update is called once per frame
     void Update()
     {
         if(isLocalPlayer){
             ButtonMashing();
+            
         }
     }
 
@@ -20,6 +23,7 @@ public class ButtonMashingEvent : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             transform.position += new Vector3(10, 0, 0) * speed * Time.deltaTime;
+            animator.SetFloat("speed", speed);
         }
     }
 }
